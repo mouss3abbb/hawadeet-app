@@ -63,19 +63,28 @@ class NewHadoota : AppCompatActivity() {
                 checkedButton
             )
 
-            val addHadootaCall = api.addHadoota(hadoota)
-            addHadootaCall.enqueue(object : Callback<Hadoota>{
-                override fun onResponse(call: Call<Hadoota>, response: Response<Hadoota>) {
-                    Toast.makeText(applicationContext,"Hadoota posted successfully",Toast.LENGTH_SHORT).show()
-                    val doneIntent = Intent(applicationContext,MainActivity::class.java)
-                    doneIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                    startActivity(doneIntent)
-                }
+            if(hadoota.body != "") {
+                val addHadootaCall = api.addHadoota(hadoota)
+                addHadootaCall.enqueue(object : Callback<Hadoota> {
+                    override fun onResponse(call: Call<Hadoota>, response: Response<Hadoota>) {
+                        Toast.makeText(
+                            applicationContext,
+                            "Hadoota posted successfully",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        val doneIntent = Intent(applicationContext, MainActivity::class.java)
+                        doneIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                        startActivity(doneIntent)
+                    }
 
-                override fun onFailure(call: Call<Hadoota>, t: Throwable) {
-                    Toast.makeText(applicationContext,"An error occured",Toast.LENGTH_SHORT).show()
-                }
-            })
+                    override fun onFailure(call: Call<Hadoota>, t: Throwable) {
+                        Toast.makeText(applicationContext, "An error occured", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                })
+            }else{
+                Toast.makeText(applicationContext,"Please write your hadoota",Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
