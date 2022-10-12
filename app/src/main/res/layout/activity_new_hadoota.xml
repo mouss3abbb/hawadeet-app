@@ -28,7 +28,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Happy"
-                android:layout_margin="8dp"
+                android:layout_margin="4dp"
                 android:background="@drawable/button_unchecked"/>
 
             <Button
@@ -36,7 +36,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Motivational"
-                android:layout_margin="8dp"
+                android:layout_margin="4dp"
                 android:background="@drawable/button_unchecked"/>
 
             <Button
@@ -44,7 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Sad"
-                android:layout_margin="8dp"
+                android:layout_margin="4dp"
                 android:background="@drawable/button_unchecked"/>
 
         </LinearLayout>
@@ -60,7 +60,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Educational"
-                android:layout_margin="8dp"
+                android:layout_margin="4dp"
                 android:background="@drawable/button_unchecked"/>
 
             <Button
@@ -68,7 +68,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Bored"
-                android:layout_margin="8dp"
+                android:layout_margin="4dp"
                 android:background="@drawable/button_unchecked"/>
 
             <Button
@@ -76,7 +76,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Other"
-                android:layout_margin="8dp"
+                android:layout_margin="4dp"
                 android:background="@drawable/button_unchecked"/>
 
         </LinearLayout>
