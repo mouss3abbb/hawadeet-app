@@ -46,6 +46,16 @@ class NewHadoota : AppCompatActivity() {
             it.background = getDrawable(R.drawable.button_checked)
             checkedButton = educational.text.toString()
         }
+        achievement.setOnClickListener {
+            resetButtons()
+            it.background = getDrawable(R.drawable.button_checked)
+            checkedButton = achievement.text.toString()
+        }
+        fun_button.setOnClickListener {
+            resetButtons()
+            it.background = getDrawable(R.drawable.button_checked)
+            checkedButton = fun_button.text.toString()
+        }
 
         added_hadoota.setOnClickListener {
             val hadoota = Hadoota(
@@ -57,7 +67,9 @@ class NewHadoota : AppCompatActivity() {
             addHadootaCall.enqueue(object : Callback<Hadoota>{
                 override fun onResponse(call: Call<Hadoota>, response: Response<Hadoota>) {
                     Toast.makeText(applicationContext,"Hadoota posted successfully",Toast.LENGTH_SHORT).show()
-                    startActivity(Intent(applicationContext,MainActivity::class.java))
+                    val doneIntent = Intent(applicationContext,MainActivity::class.java)
+                    doneIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                    startActivity(doneIntent)
                 }
 
                 override fun onFailure(call: Call<Hadoota>, t: Throwable) {
@@ -73,6 +85,8 @@ class NewHadoota : AppCompatActivity() {
         motivational.background = getDrawable(R.drawable.button_unchecked)
         bored.background = getDrawable(R.drawable.button_unchecked)
         educational.background = getDrawable(R.drawable.button_unchecked)
+        fun_button.background = getDrawable(R.drawable.button_unchecked)
+        achievement.background = getDrawable(R.drawable.button_unchecked)
         other.background = getDrawable(R.drawable.button_unchecked)
     }
 }

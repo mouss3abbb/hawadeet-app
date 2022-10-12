@@ -72,6 +72,32 @@
                 android:background="@drawable/button_unchecked"/>
 
             <Button
+                android:id="@+id/fun_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fun"
+                android:layout_margin="4dp"
+                android:background="@drawable/button_unchecked"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+
+            <Button
+                android:id="@+id/achievement"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Achievement"
+                android:layout_margin="4dp"
+                android:background="@drawable/button_unchecked"/>
+
+            <Button
                 android:id="@+id/other"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
