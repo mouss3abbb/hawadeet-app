@@ -15,4 +15,7 @@ interface HawadeetApi {
     fun addHadoota(
         @Body hadoota: Hadoota
     ): Call<Hadoota>
+
+    @GET("show-all")
+    fun getHawadeet(): Call<List<Hadoota>>
 }

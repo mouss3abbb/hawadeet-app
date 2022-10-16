@@ -7,28 +7,93 @@
     android:background="@color/bg_color"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/hadoota_status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <HorizontalScrollView
+        android:id="@+id/categories"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:textColor="@color/text_secondary"
-        android:textSize="16sp"
-        android:layout_marginTop="60dp" />
-    <TextView
-        android:id="@+id/hadoota_body"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Loading"
-        android:textSize="36sp"
-        android:textColor="@color/text_main"
-        android:gravity="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/all_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="All"
+                android:layout_margin="4dp"
+                android:background="@drawable/button_checked"/>
+
+            <Button
+                android:id="@+id/happy_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Happy"
+                android:layout_margin="4dp"
+                android:background="@drawable/button_unchecked"/>
+
+            <Button
+                android:id="@+id/sad_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sad"
+                android:layout_margin="4dp"
+                android:background="@drawable/button_unchecked"/>
+
+            <Button
+                android:id="@+id/fun_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fun"
+                android:layout_margin="4dp"
+                android:background="@drawable/button_unchecked"/>
+
+            <Button
+                android:id="@+id/motivational_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Motivational"
+                android:layout_margin="4dp"
+                android:background="@drawable/button_unchecked"/>
+
+            <Button
+                android:id="@+id/educational_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Educational"
+                android:layout_margin="4dp"
+                android:background="@drawable/button_unchecked"/>
+
+            <Button
+                android:id="@+id/other_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Other"
+                android:layout_margin="4dp"
+                android:background="@drawable/button_unchecked"/>
+
+        </LinearLayout>
+
+    </HorizontalScrollView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/categories"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:padding="8dp">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_new_hadoota"
@@ -41,5 +106,4 @@
         app:borderWidth="0dp"
         android:src="@drawable/ic_post"
         app:tint="@color/text_main"/>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
