@@ -1,8 +1,13 @@
 package com.example.hawadeet
 
+import android.content.Intent
+import android.opengl.Visibility
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat.startActivity
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.hadoota_item.view.*
 
@@ -13,6 +18,7 @@ class HawadeetAdapter(
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view){
         val hadootaStatus = view.hadoota_status
         val hadootaBody = view.hadoota_body
+        val shareButton = view.share_button
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -25,7 +31,20 @@ class HawadeetAdapter(
         with(holder){
             hadootaStatus.text = hawadeetData[position].status
             hadootaBody.text = hawadeetData[position].body
+            if (hadootaBody.text == "No hawadeet found"){
+                shareButton.visibility = View.INVISIBLE
+            }
+            shareButton.setOnClickListener {
+                val shareIntent = Intent().apply {
+                    action = Intent.ACTION_SEND
+                    type = "text/plain"
+                    putExtra(Intent.EXTRA_SUBJECT,"Share Hadoota")
+                    putExtra(Intent.EXTRA_TEXT,hadootaBody.text.toString()+"\n\nFeeling "+hadootaStatus.text.toString())
+                }
+                startActivity(it.context, Intent.createChooser(shareIntent,null),null)
+            }
         }
+
     }
 
     override fun getItemCount(): Int = hawadeetData.size
