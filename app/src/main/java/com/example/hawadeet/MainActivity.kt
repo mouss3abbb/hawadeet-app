@@ -5,13 +5,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Button
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.example.hawadeet.adapters.HawadeetAdapter
+import com.example.hawadeet.api.HawadeetApi
+import com.example.hawadeet.db.HawadeetDatabase
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_new_hadoota.*
-import kotlinx.android.synthetic.main.hadoota_item.*
+import kotlinx.coroutines.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -21,13 +21,14 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 lateinit var retrofit: Retrofit
 lateinit var api: HawadeetApi
-
+lateinit var db: HawadeetDatabase
 class MainActivity : AppCompatActivity() {
     private val URL = "https://hawadeet-api.herokuapp.com/"
     private var checkedButton = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        db = HawadeetDatabase.getInstance(this)
         getHawadeet()
         all_category.setOnClickListener {
             buttonListener(it,"")
@@ -86,14 +87,20 @@ class MainActivity : AppCompatActivity() {
         Log.d("TAG", "onCreate")
         getHawadeetCall.enqueue(object : Callback<List<Hadoota>>{
             override fun onResponse(call: Call<List<Hadoota>>, response: Response<List<Hadoota>>) {
-                if (response.body().isNullOrEmpty()){
-                    recycler_view.adapter = HawadeetAdapter(listOf(Hadoota(body = "No hawadeet found", status = "")))
-                    recycler_view.layoutManager = LinearLayoutManager(applicationContext)
-                    return
+                val hawadeetList = response.body()
+                var adapterList: List<Hadoota> = listOf()
+                if (hawadeetList != null) {
+                    runBlocking {
+                        db.hadootaDao().insertHawadeet(hawadeetList)
+                        adapterList = db.hadootaDao().getHawadeet()
+
+                    }
                 }
-                val adapter = response.body()?.let { HawadeetAdapter(it) }
-                recycler_view.adapter = adapter
-                recycler_view.layoutManager = LinearLayoutManager(applicationContext)
+                if(adapterList.isEmpty()) {
+                    adapterList = listOf(Hadoota(body = "No hawadeet found", status = ""))
+                }
+                recycler_view.adapter = HawadeetAdapter(adapterList)
+                recycler_view.layoutManager = LinearLayoutManager(applicationContext,LinearLayoutManager.VERTICAL,false)
             }
 
             override fun onFailure(call: Call<List<Hadoota>>, t: Throwable) {

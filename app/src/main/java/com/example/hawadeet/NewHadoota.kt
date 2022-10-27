@@ -3,9 +3,15 @@ package com.example.hawadeet
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.TextUtils
 import android.widget.Button
 import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import kotlinx.android.synthetic.main.activity_new_hadoota.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -63,7 +69,7 @@ class NewHadoota : AppCompatActivity() {
                 checkedButton
             )
 
-            if(hadoota.body != "") {
+            if(TextUtils.isEmpty(hadoota.body)) {
                 val addHadootaCall = api.addHadoota(hadoota)
                 addHadootaCall.enqueue(object : Callback<Hadoota> {
                     override fun onResponse(call: Call<Hadoota>, response: Response<Hadoota>) {

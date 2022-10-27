@@ -1,14 +1,13 @@
-package com.example.hawadeet
+package com.example.hawadeet.adapters
 
 import android.content.Intent
-import android.opengl.Visibility
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat.startActivity
-import androidx.core.view.isGone
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
+import com.example.hawadeet.Hadoota
+import com.example.hawadeet.R
 import kotlinx.android.synthetic.main.hadoota_item.view.*
 
 class HawadeetAdapter(
@@ -31,7 +30,7 @@ class HawadeetAdapter(
         with(holder){
             hadootaStatus.text = hawadeetData[position].status
             hadootaBody.text = hawadeetData[position].body
-            if (hadootaBody.text == "No hawadeet found"){
+            if (hadootaStatus.text == ""){
                 shareButton.visibility = View.INVISIBLE
             }
             shareButton.setOnClickListener {
