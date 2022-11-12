@@ -16,5 +16,5 @@ interface HadootaDao {
     suspend fun getHawadeet(): List<Hadoota>
 
     @Query("SELECT * FROM Hadoota WHERE status = :status")
-    suspend fun getSpecificHawadeet(status: String): List<Hadoota>
+    suspend fun getHawadeet(status: String): List<Hadoota>
 }

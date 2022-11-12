@@ -14,13 +14,13 @@ abstract class HawadeetDatabase : RoomDatabase(){
         @Volatile private var INSTANCE: HawadeetDatabase? = null
 
         fun getInstance(context: Context): HawadeetDatabase = INSTANCE ?: synchronized(this){
-            val ins = Room.databaseBuilder(
+            val instance = Room.databaseBuilder(
                     context,
                     HawadeetDatabase::class.java,
                     "hawadeet_db"
                 ).build()
-            INSTANCE = ins
-            ins
+            INSTANCE = instance
+            instance
         }
     }
 }

@@ -21,77 +21,77 @@ class NewHadoota : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_hadoota)
 
-        var checkedButton = "Other"
-        happy.setOnClickListener {
-            resetButtons()
-            it.background = getDrawable(R.drawable.button_checked)
-            checkedButton = happy.text.toString()
-        }
-        sad.setOnClickListener {
-            resetButtons()
-            it.background = getDrawable(R.drawable.button_checked)
-            checkedButton = sad.text.toString()
-        }
-        motivational.setOnClickListener {
-            resetButtons()
-            it.background = getDrawable(R.drawable.button_checked)
-            checkedButton = motivational.text.toString()
-        }
-        other.setOnClickListener {
-            resetButtons()
-            it.background = getDrawable(R.drawable.button_checked)
-            checkedButton = other.text.toString()
-        }
-        bored.setOnClickListener {
-            resetButtons()
-            it.background = getDrawable(R.drawable.button_checked)
-            checkedButton = bored.text.toString()
-        }
-        educational.setOnClickListener {
-            resetButtons()
-            it.background = getDrawable(R.drawable.button_checked)
-            checkedButton = educational.text.toString()
-        }
-        achievement.setOnClickListener {
-            resetButtons()
-            it.background = getDrawable(R.drawable.button_checked)
-            checkedButton = achievement.text.toString()
-        }
-        fun_button.setOnClickListener {
-            resetButtons()
-            it.background = getDrawable(R.drawable.button_checked)
-            checkedButton = fun_button.text.toString()
-        }
-
-        added_hadoota.setOnClickListener {
-            val hadoota = Hadoota(
-                new_hadoota.text.toString(),
-                checkedButton
-            )
-
-            if(TextUtils.isEmpty(hadoota.body)) {
-                val addHadootaCall = api.addHadoota(hadoota)
-                addHadootaCall.enqueue(object : Callback<Hadoota> {
-                    override fun onResponse(call: Call<Hadoota>, response: Response<Hadoota>) {
-                        Toast.makeText(
-                            applicationContext,
-                            "Hadoota posted successfully",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        val doneIntent = Intent(applicationContext, MainActivity::class.java)
-                        doneIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                        startActivity(doneIntent)
-                    }
-
-                    override fun onFailure(call: Call<Hadoota>, t: Throwable) {
-                        Toast.makeText(applicationContext, "An error occured", Toast.LENGTH_SHORT)
-                            .show()
-                    }
-                })
-            }else{
-                Toast.makeText(applicationContext,"Please write your hadoota",Toast.LENGTH_SHORT).show()
-            }
-        }
+//        var checkedButton = "Other"
+//        happy.setOnClickListener {
+//            resetButtons()
+//            it.background = getDrawable(R.drawable.button_checked)
+//            checkedButton = happy.text.toString()
+//        }
+//        sad.setOnClickListener {
+//            resetButtons()
+//            it.background = getDrawable(R.drawable.button_checked)
+//            checkedButton = sad.text.toString()
+//        }
+//        motivational.setOnClickListener {
+//            resetButtons()
+//            it.background = getDrawable(R.drawable.button_checked)
+//            checkedButton = motivational.text.toString()
+//        }
+//        other.setOnClickListener {
+//            resetButtons()
+//            it.background = getDrawable(R.drawable.button_checked)
+//            checkedButton = other.text.toString()
+//        }
+//        bored.setOnClickListener {
+//            resetButtons()
+//            it.background = getDrawable(R.drawable.button_checked)
+//            checkedButton = bored.text.toString()
+//        }
+//        educational.setOnClickListener {
+//            resetButtons()
+//            it.background = getDrawable(R.drawable.button_checked)
+//            checkedButton = educational.text.toString()
+//        }
+//        achievement.setOnClickListener {
+//            resetButtons()
+//            it.background = getDrawable(R.drawable.button_checked)
+//            checkedButton = achievement.text.toString()
+//        }
+//        fun_button.setOnClickListener {
+//            resetButtons()
+//            it.background = getDrawable(R.drawable.button_checked)
+//            checkedButton = fun_button.text.toString()
+//        }
+//
+//        added_hadoota.setOnClickListener {
+//            val hadoota = Hadoota(
+//                new_hadoota.text.toString(),
+//                checkedButton
+//            )
+//
+//            if(TextUtils.isEmpty(hadoota.body)) {
+//                val addHadootaCall = api.addHadoota(hadoota)
+//                addHadootaCall.enqueue(object : Callback<Hadoota> {
+//                    override fun onResponse(call: Call<Hadoota>, response: Response<Hadoota>) {
+//                        Toast.makeText(
+//                            applicationContext,
+//                            "Hadoota posted successfully",
+//                            Toast.LENGTH_SHORT
+//                        ).show()
+//                        val doneIntent = Intent(applicationContext, MainActivity::class.java)
+//                        doneIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+//                        startActivity(doneIntent)
+//                    }
+//
+//                    override fun onFailure(call: Call<Hadoota>, t: Throwable) {
+//                        Toast.makeText(applicationContext, "An error occured", Toast.LENGTH_SHORT)
+//                            .show()
+//                    }
+//                })
+//            }else{
+//                Toast.makeText(applicationContext,"Please write your hadoota",Toast.LENGTH_SHORT).show()
+//            }
+//        }
     }
 
     fun resetButtons(){
