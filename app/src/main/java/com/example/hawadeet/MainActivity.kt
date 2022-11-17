@@ -31,7 +31,12 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 
 val NO_HAWADEET = Hadoota("No hawadeet found", "")
-
+private val URL = "https://hawadeet-api.herokuapp.com/"
+private val retrofit = Retrofit.Builder()
+    .baseUrl(URL)
+    .addConverterFactory(GsonConverterFactory.create())
+    .build()
+var api = retrofit.create(HawadeetApi::class.java)
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {

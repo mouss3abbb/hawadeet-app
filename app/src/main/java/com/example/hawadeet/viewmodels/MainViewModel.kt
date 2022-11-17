@@ -1,11 +1,13 @@
 package com.example.hawadeet.viewmodels
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.view.View
 import android.widget.Button
 import androidx.appcompat.content.res.AppCompatResources.getDrawable
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.hawadeet.NewHadoota
 import com.example.hawadeet.R
 import com.example.hawadeet.adapters.HawadeetAdapter
 import com.example.hawadeet.repositories.MainRepository
@@ -27,10 +29,18 @@ class MainViewModel(
         previousButton.background = getDrawable(repository.context,R.drawable.button_unchecked)
         it.background = getDrawable(repository.context,R.drawable.button_checked)
         previousButton = it
-        selectedCategory = it.text.toString()
+        selectedCategory = if(it.text.toString() == "All") "" else it.text.toString()
         hawadeetAdapterLiveData.value = HawadeetAdapter(repository.provideHawadeet(selectedCategory))
     }
 
+    fun addNewHadoota(){
+        repository.context.startActivity(
+            Intent(
+               repository.context,
+               NewHadoota::class.java
+            )
+        )
+    }
 
 
 }

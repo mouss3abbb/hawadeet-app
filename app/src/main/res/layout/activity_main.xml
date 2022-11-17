@@ -139,6 +139,7 @@
             android:backgroundTint="@color/button_color"
             app:borderWidth="0dp"
             android:src="@drawable/ic_post"
-            app:tint="@color/text_main" />
+            app:tint="@color/text_main"
+            android:onClick="@{() -> mainViewModel.addNewHadoota()}"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

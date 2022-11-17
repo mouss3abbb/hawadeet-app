@@ -6,6 +6,7 @@ import android.text.TextUtils
 import android.widget.Toast
 import com.example.hawadeet.Hadoota
 import com.example.hawadeet.NO_HAWADEET
+import com.example.hawadeet.api
 import com.example.hawadeet.api.HawadeetApi
 import com.example.hawadeet.db.HawadeetDatabase
 import kotlinx.android.synthetic.main.activity_main.*
@@ -19,35 +20,22 @@ import retrofit2.converter.gson.GsonConverterFactory
 class MainRepository private constructor(
     val context: Context
 ) {
-    private val URL = "https://hawadeet-api.herokuapp.com/"
-    private val retrofit = Retrofit.Builder()
-        .baseUrl(URL)
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
-    private var api = retrofit.create(HawadeetApi::class.java)
-    private var db: HawadeetDatabase = HawadeetDatabase.getInstance(context)
-    private val dao = db.hadootaDao()
 
+    private val dao = HawadeetDatabase.getInstance(context).hadootaDao()
     init {
-        val hawadeetCall: Call<List<Hadoota>> = api.getHawadeet()
-        var adapterList: List<Hadoota>
-        hawadeetCall.enqueue(object : Callback<List<Hadoota>> {
+        api.getHawadeet().enqueue(object : Callback<List<Hadoota>> {
             override fun onResponse(
                 call: Call<List<Hadoota>>,
                 response: Response<List<Hadoota>>
             ) {
                 runBlocking {
                     val hawadeetAdapterList = response.body()
-                    if (hawadeetAdapterList.isNullOrEmpty()) {
-                        dao.insertHawadeet(hawadeetAdapterList!!)
+                    if (!hawadeetAdapterList.isNullOrEmpty()) {
+                        dao.insertHawadeet(hawadeetAdapterList)
                     }
                 }
             }
-
-            override fun onFailure(call: Call<List<Hadoota>>, t: Throwable) {
-                Toast.makeText(context, "Network error", Toast.LENGTH_SHORT)
-                    .show()
-            }
+            override fun onFailure(call: Call<List<Hadoota>>, t: Throwable) {}
         })
     }
 
@@ -56,6 +44,7 @@ class MainRepository private constructor(
         @Volatile
         private var INSTANCE: MainRepository? = null
         fun getInstance(context: Context): MainRepository {
+
             return INSTANCE ?: synchronized(this) { MainRepository(context) }
         }
     }
