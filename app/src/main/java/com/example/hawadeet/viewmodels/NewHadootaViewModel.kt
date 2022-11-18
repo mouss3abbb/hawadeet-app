@@ -30,10 +30,12 @@ class NewHadootaViewModel @SuppressLint("StaticFieldLeak") constructor(
 
     fun addNewHadoota(view: View) {
         val it = view as AppCompatEditText
-        if (TextUtils.isEmpty(it.text.toString().trim())) {
+        if (TextUtils.isEmpty(it.text.toString().trim(' ','ْ','ﹾ'))) {
             Toast.makeText(context, "Please provide text for your hadoota", Toast.LENGTH_SHORT)
                 .show()
         } else {
+            Toast.makeText(context, "Hadoota posted successfully", Toast.LENGTH_SHORT)
+                .show()
             GlobalScope.launch (Dispatchers.IO){
                 val addHadootaResponse = api.addHadoota(Hadoota(it.text.toString(), selectedCategory))
                 if (!addHadootaResponse.isSuccessful) {
@@ -44,7 +46,7 @@ class NewHadootaViewModel @SuppressLint("StaticFieldLeak") constructor(
                 Intent(
                     context,
                     MainActivity::class.java
-                )
+                ).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             )
         }
 
