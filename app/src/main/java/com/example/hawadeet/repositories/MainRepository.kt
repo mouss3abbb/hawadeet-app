@@ -23,20 +23,9 @@ class MainRepository private constructor(
 
     private val dao = HawadeetDatabase.getInstance(context).hadootaDao()
     init {
-        api.getHawadeet().enqueue(object : Callback<List<Hadoota>> {
-            override fun onResponse(
-                call: Call<List<Hadoota>>,
-                response: Response<List<Hadoota>>
-            ) {
-                runBlocking {
-                    val hawadeetAdapterList = response.body()
-                    if (!hawadeetAdapterList.isNullOrEmpty()) {
-                        dao.insertHawadeet(hawadeetAdapterList)
-                    }
-                }
-            }
-            override fun onFailure(call: Call<List<Hadoota>>, t: Throwable) {}
-        })
+        GlobalScope.launch (Dispatchers.IO){
+            dao.insertHawadeet(api.getHawadeet().body()!!)
+        }
     }
 
     companion object {
@@ -44,7 +33,6 @@ class MainRepository private constructor(
         @Volatile
         private var INSTANCE: MainRepository? = null
         fun getInstance(context: Context): MainRepository {
-
             return INSTANCE ?: synchronized(this) { MainRepository(context) }
         }
     }
@@ -58,6 +46,6 @@ class MainRepository private constructor(
             if (adapterList.isEmpty())
                 adapterList = listOf(NO_HAWADEET)
         }
-        return adapterList
+        return adapterList.reversed()
     }
 }
