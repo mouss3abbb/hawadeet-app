@@ -31,7 +31,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 
 val NO_HAWADEET = Hadoota("No hawadeet found", "")
-private val URL = "https://hawadeet-api.herokuapp.com/"
+private val URL = "https://hawadeet-api.onrender.com/"
 private val retrofit = Retrofit.Builder()
     .baseUrl(URL)
     .addConverterFactory(GsonConverterFactory.create())
@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.mainViewModel = mainViewModel
-        mainViewModel.hawadeetAdapterLiveData.observe(this,Observer{
+        mainViewModel.hawadeetAdapterLiveData.observe(this, {
             binding.recyclerView.adapter = mainViewModel.hawadeetAdapterLiveData.value
         })
 
