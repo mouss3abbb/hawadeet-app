@@ -1,39 +1,29 @@
 package com.example.hawadeet.repositories
 
-import android.annotation.SuppressLint
-import android.content.Context
-import android.text.TextUtils
-import android.widget.Toast
+import android.app.Application
 import com.example.hawadeet.Hadoota
-import com.example.hawadeet.NO_HAWADEET
-import com.example.hawadeet.api
 import com.example.hawadeet.api.HawadeetApi
-import com.example.hawadeet.db.HawadeetDatabase
-import kotlinx.android.synthetic.main.activity_main.*
+import com.example.hawadeet.db.HadootaDao
 import kotlinx.coroutines.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class MainRepository private constructor(
-    val context: Context
+
+class MainRepository @Inject constructor(
+    val api: HawadeetApi,
+    private val dao: HadootaDao,
+    val app: Application,
+    private val NO_HAWADEET: Hadoota
 ) {
 
-    private val dao = HawadeetDatabase.getInstance(context).hadootaDao()
     init {
-        GlobalScope.launch (Dispatchers.IO){
+        GlobalScope.launch(Dispatchers.IO) {
             dao.insertHawadeet(api.getHawadeet().body()!!)
-        }
-    }
-
-    companion object {
-        @SuppressLint("StaticFieldLeak")
-        @Volatile
-        private var INSTANCE: MainRepository? = null
-        fun getInstance(context: Context): MainRepository {
-            return INSTANCE ?: synchronized(this) { MainRepository(context) }
         }
     }
 

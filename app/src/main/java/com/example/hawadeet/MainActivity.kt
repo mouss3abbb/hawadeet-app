@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -18,9 +19,10 @@ import com.example.hawadeet.adapters.HawadeetAdapter
 import com.example.hawadeet.api.HawadeetApi
 import com.example.hawadeet.databinding.ActivityMainBinding
 import com.example.hawadeet.db.HawadeetDatabase
+import com.example.hawadeet.generated.callback.OnClickListener
 import com.example.hawadeet.repositories.MainRepository
 import com.example.hawadeet.viewmodels.MainViewModel
-import com.example.hawadeet.viewmodels.MainViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.*
 import retrofit2.Call
@@ -30,28 +32,36 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 
-val NO_HAWADEET = Hadoota("No hawadeet found", "")
-private val URL = "https://hawadeet-api.onrender.com/"
-private val retrofit = Retrofit.Builder()
-    .baseUrl(URL)
-    .addConverterFactory(GsonConverterFactory.create())
-    .build()
-var api = retrofit.create(HawadeetApi::class.java)
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    private val mainViewModel: MainViewModel by viewModels()
+    private lateinit var previousButton: Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val mainViewModel: MainViewModel by viewModels {
-            MainViewModelFactory(MainRepository.getInstance(this), binding.root)
-        }
-
+        previousButton = binding.allCategory
         binding.mainViewModel = mainViewModel
-        mainViewModel.hawadeetAdapterLiveData.observe(this, {
+        mainViewModel.hawadeetAdapterLiveData.observe(this) {
             binding.recyclerView.adapter = mainViewModel.hawadeetAdapterLiveData.value
-        })
+        }
+        binding.allCategory.setOnClickListener { buttonListener(it as Button) }
+        binding.happyCategory.setOnClickListener { buttonListener(it as Button) }
+        binding.sadCategory.setOnClickListener { buttonListener(it as Button) }
+        binding.achievementCategory.setOnClickListener { buttonListener(it as Button) }
+        binding.motivationalCategory.setOnClickListener { buttonListener(it as Button) }
+        binding.otherCategory.setOnClickListener { buttonListener(it as Button) }
+        binding.funCategory.setOnClickListener { buttonListener(it as Button) }
+        binding.boredCategory.setOnClickListener { buttonListener(it as Button) }
+        binding.educationalCategory.setOnClickListener { buttonListener(it as Button) }
 
+
+    }
+
+    fun buttonListener(it: Button) {
+        mainViewModel.buttonListener(previousButton, it)
+        previousButton = it
     }
 
 

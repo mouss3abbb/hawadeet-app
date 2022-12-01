@@ -35,8 +35,7 @@
                     android:layout_height="wrap_content"
                     android:text="All"
                     android:layout_margin="4dp"
-                    android:background="@drawable/button_checked"
-                    android:onClick="@{(it)->mainViewModel.buttonListener(it)}"/>
+                    android:background="@drawable/button_checked"/>
 
                 <Button
                     android:id="@+id/happy_category"
@@ -44,8 +43,7 @@
                     android:layout_height="wrap_content"
                     android:text="Happy"
                     android:layout_margin="4dp"
-                    android:background="@drawable/button_unchecked"
-                    android:onClick="@{(it)->mainViewModel.buttonListener(it)}"/>
+                    android:background="@drawable/button_unchecked"/>
 
                 <Button
                     android:id="@+id/sad_category"
@@ -53,8 +51,7 @@
                     android:layout_height="wrap_content"
                     android:text="Sad"
                     android:layout_margin="4dp"
-                    android:background="@drawable/button_unchecked"
-                    android:onClick="@{(it)->mainViewModel.buttonListener(it)}"/>
+                    android:background="@drawable/button_unchecked"/>
 
                 <Button
                     android:id="@+id/fun_category"
@@ -62,8 +59,7 @@
                     android:layout_height="wrap_content"
                     android:text="Fun"
                     android:layout_margin="4dp"
-                    android:background="@drawable/button_unchecked"
-                    android:onClick="@{(it)->mainViewModel.buttonListener(it)}"/>
+                    android:background="@drawable/button_unchecked"/>
 
                 <Button
                     android:id="@+id/motivational_category"
@@ -71,8 +67,7 @@
                     android:layout_height="wrap_content"
                     android:text="Motivational"
                     android:layout_margin="4dp"
-                    android:background="@drawable/button_unchecked"
-                    android:onClick="@{(it)->mainViewModel.buttonListener(it)}"/>
+                    android:background="@drawable/button_unchecked"/>
 
                 <Button
                     android:id="@+id/educational_category"
@@ -80,8 +75,7 @@
                     android:layout_height="wrap_content"
                     android:text="Educational"
                     android:layout_margin="4dp"
-                    android:background="@drawable/button_unchecked"
-                    android:onClick="@{(it)->mainViewModel.buttonListener(it)}"/>
+                    android:background="@drawable/button_unchecked"/>
 
                 <Button
                     android:id="@+id/bored_category"
@@ -89,8 +83,7 @@
                     android:layout_height="wrap_content"
                     android:text="Bored"
                     android:layout_margin="4dp"
-                    android:background="@drawable/button_unchecked"
-                    android:onClick="@{(it)->mainViewModel.buttonListener(it)}"/>
+                    android:background="@drawable/button_unchecked"/>
 
                 <Button
                     android:id="@+id/achievement_category"
@@ -98,8 +91,7 @@
                     android:layout_height="wrap_content"
                     android:text="Achievement"
                     android:layout_margin="4dp"
-                    android:background="@drawable/button_unchecked"
-                    android:onClick="@{(it)->mainViewModel.buttonListener(it)}"/>
+                    android:background="@drawable/button_unchecked"/>
 
                 <Button
                     android:id="@+id/other_category"
@@ -107,8 +99,7 @@
                     android:layout_height="wrap_content"
                     android:text="Other"
                     android:layout_margin="4dp"
-                    android:background="@drawable/button_unchecked"
-                    android:onClick="@{(it)->mainViewModel.buttonListener(it)}"/>
+                    android:background="@drawable/button_unchecked"/>
 
             </LinearLayout>
 

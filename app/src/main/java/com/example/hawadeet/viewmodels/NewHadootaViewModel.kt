@@ -1,6 +1,7 @@
 package com.example.hawadeet.viewmodels
 
 import android.annotation.SuppressLint
+import android.app.Application
 import android.content.Context
 import android.content.Intent
 import android.text.TextUtils
@@ -13,38 +14,39 @@ import androidx.lifecycle.ViewModel
 import com.example.hawadeet.Hadoota
 import com.example.hawadeet.MainActivity
 import com.example.hawadeet.R
-import com.example.hawadeet.api
+import com.example.hawadeet.api.HawadeetApi
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class NewHadootaViewModel @SuppressLint("StaticFieldLeak") constructor(
-    @SuppressLint("StaticFieldLeak") val context: Context,
-    val view: View
+
+@HiltViewModel
+class NewHadootaViewModel @Inject constructor(
+    val app: Application,
+    val api: HawadeetApi
 ) : ViewModel() {
     private var selectedCategory = "Other"
 
-    @SuppressLint("StaticFieldLeak")
-    private var previousButton: Button = view.findViewById(R.id.other)
-
-
     fun addNewHadoota(view: View) {
         val it = view as AppCompatEditText
-        if (TextUtils.isEmpty(it.text.toString().trim(' ','ْ','ﹾ'))) {
-            Toast.makeText(context, "Please provide text for your hadoota", Toast.LENGTH_SHORT)
+        if (TextUtils.isEmpty(it.text.toString().trim(' ', 'ْ', 'ﹾ'))) {
+            Toast.makeText(app, "Please provide text for your hadoota", Toast.LENGTH_SHORT)
                 .show()
         } else {
-            Toast.makeText(context, "Hadoota posted successfully", Toast.LENGTH_SHORT)
+            Toast.makeText(app, "Hadoota posted successfully", Toast.LENGTH_SHORT)
                 .show()
-            GlobalScope.launch (Dispatchers.IO){
-                val addHadootaResponse = api.addHadoota(Hadoota(it.text.toString(), selectedCategory))
+            GlobalScope.launch(Dispatchers.IO) {
+                val addHadootaResponse =
+                    api.addHadoota(Hadoota(it.text.toString(), selectedCategory))
                 if (!addHadootaResponse.isSuccessful) {
-                    Toast.makeText(context, "Network Error", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(app, "Network Error", Toast.LENGTH_SHORT).show()
                 }
             }
-            context.startActivity(
+            app.startActivity(
                 Intent(
-                    context,
+                    app,
                     MainActivity::class.java
                 ).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             )
@@ -52,12 +54,9 @@ class NewHadootaViewModel @SuppressLint("StaticFieldLeak") constructor(
 
     }
 
-    @SuppressLint("ResourceAsColor")
-    fun buttonListener(view: View) {
-        val it = view as Button
-        previousButton.background = getDrawable(context, R.drawable.button_unchecked)
-        it.background = getDrawable(context, R.drawable.button_checked)
-        previousButton = it
+    fun buttonListener(previousButton: Button, it: Button) {
+        previousButton.background = getDrawable(app, R.drawable.button_unchecked)
+        it.background = getDrawable(app, R.drawable.button_checked)
         selectedCategory = it.text.toString()
     }
 

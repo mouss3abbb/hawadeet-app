@@ -11,34 +11,33 @@ import com.example.hawadeet.NewHadoota
 import com.example.hawadeet.R
 import com.example.hawadeet.adapters.HawadeetAdapter
 import com.example.hawadeet.repositories.MainRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.internal.InjectedFieldSignature
 import kotlinx.android.synthetic.main.activity_main.*
+import javax.inject.Inject
 
-class MainViewModel(
-    private val repository: MainRepository,
-    @SuppressLint("StaticFieldLeak") private val view: View
-    ): ViewModel() {
+
+@HiltViewModel
+class MainViewModel @Inject constructor (val repository: MainRepository ) : ViewModel() {
     private var selectedCategory = ""
     var hawadeetAdapterLiveData = MutableLiveData<HawadeetAdapter>().apply {
         value = HawadeetAdapter(repository.provideHawadeet(selectedCategory))
     }
 
-    @SuppressLint("StaticFieldLeak")
-    private var previousButton: Button = view.findViewById(R.id.all_category)
-    fun buttonListener(view: View){
-        val it = view as Button
-        previousButton.background = getDrawable(repository.context,R.drawable.button_unchecked)
-        it.background = getDrawable(repository.context,R.drawable.button_checked)
-        previousButton = it
-        selectedCategory = if(it.text.toString() == "All") "" else it.text.toString()
-        hawadeetAdapterLiveData.value = HawadeetAdapter(repository.provideHawadeet(selectedCategory))
+    fun buttonListener(previousButton: Button, it: Button) {
+        previousButton.background = getDrawable(repository.app, R.drawable.button_unchecked)
+        it.background = getDrawable(repository.app, R.drawable.button_checked)
+        selectedCategory = if (it.text.toString() == "All") "" else it.text.toString()
+        hawadeetAdapterLiveData.value =
+            HawadeetAdapter(repository.provideHawadeet(selectedCategory))
     }
 
-    fun addNewHadoota(){
-        repository.context.startActivity(
+    fun addNewHadoota() {
+        repository.app.startActivity(
             Intent(
-               repository.context,
-               NewHadoota::class.java
-            )
+                repository.app,
+                NewHadoota::class.java
+            ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         )
     }
 

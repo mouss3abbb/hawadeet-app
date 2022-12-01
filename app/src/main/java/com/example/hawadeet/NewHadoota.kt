@@ -1,39 +1,42 @@
 package com.example.hawadeet
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.TextUtils
 import android.widget.Button
-import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.lifecycle.lifecycleScope
 import com.example.hawadeet.databinding.ActivityNewHadootaBinding
-import com.example.hawadeet.viewmodels.NewHadootaFactory
 import com.example.hawadeet.viewmodels.NewHadootaViewModel
-import kotlinx.android.synthetic.main.activity_new_hadoota.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import dagger.hilt.android.AndroidEntryPoint
 
+
+@AndroidEntryPoint
 class NewHadoota : AppCompatActivity() {
     private lateinit var binding: ActivityNewHadootaBinding
+    private val newHadootaViewModel: NewHadootaViewModel by viewModels()
+    private lateinit var previousButton: Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        println("NewHadoota")
         binding = ActivityNewHadootaBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val newHadootaViewModel: NewHadootaViewModel by viewModels {
-            NewHadootaFactory(this,binding.root)
-        }
+        previousButton = binding.other
         binding.newHadootaViewModel = newHadootaViewModel
         binding.editText = binding.newHadoota
 
-    }
+        binding.achievement.setOnClickListener { buttonListener(it as Button) }
+        binding.other.setOnClickListener { buttonListener(it as Button) }
+        binding.sad.setOnClickListener { buttonListener(it as Button) }
+        binding.happy.setOnClickListener { buttonListener(it as Button) }
+        binding.funButton.setOnClickListener { buttonListener(it as Button) }
+        binding.educational.setOnClickListener { buttonListener(it as Button) }
+        binding.motivational.setOnClickListener { buttonListener(it as Button) }
+        binding.bored.setOnClickListener { buttonListener(it as Button) }
 
+    }
+    fun buttonListener(it: Button) {
+        newHadootaViewModel.buttonListener(previousButton, it)
+        previousButton = it
+    }
 
 }
